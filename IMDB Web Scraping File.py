@@ -18,31 +18,20 @@ data = soup.find('ul', attrs={'class' : 'ipc-metadata-list ipc-metadata-list--di
 movies_name = []
 movie_rating = []
 movie_year = []
-movie_runtime = []
-movie_appropriate = []
+
 # Now i find the data i need by going to the website to inspect the code and access it
 for store in data.find_all('li', attrs={'class' :'ipc-metadata-list-summary-item sc-10233bc-0 TwzGn cli-parent'}):
-    a = 0
-    b = 1
-    c = 2
     # I now find the names and append them in a list
-    movie_name = store.find_all('h3', class_='ipc-title__text')
-    texts= [h3.text for h3 in movie_name]
-    movies_name.append(texts[a])
+    movie_name = store.find('h3', class_='ipc-title__text').text
+    movies_name.append(movie_name)
     # i once again do the same and deploy the data in a list
-    movie_rating_0 = store.find_all('span', class_='ipc-rating-star--rating')
-    texts = [span.text for span in movie_rating_0]
-    movie_rating.append(texts[a])
+    movie_rating_0 = store.find('span', class_='ipc-rating-star--rating').text
+    movie_rating.append(movie_rating_0)
     # Now  i again do the same append them accordingly
-    movies_details = store.find_all('span', class_='sc-b189961a-8 hCbzGp cli-title-metadata-item')
-    texts = [span.text for span in movies_details]
-
-    movie_year.append(texts[a])
-    movie_runtime.append(texts[b])
-    movie_appropriate.append(texts[c])
-        
+    movies_details = store.find('span', class_='sc-b189961a-8 hCbzGp cli-title-metadata-item').text
+    movie_year.append(movies_details)
 # Now i put the data in dict and then into panda dataframe and then to a csv file
-dict = {'Rank and Name': movies_name, 'Ratings': movie_rating, 'Year':movie_year, 'Runtime':movie_runtime, 'Rated':movie_appropriate}
+dict = {'Rank and Name': movies_name, 'Ratings': movie_rating, 'Year':movie_year}
 dp = pd.DataFrame(dict)
 print(dp)
-dp.to_csv('IMDB.Files',index=False)
+dp.to_csv('IMDB.Files', index=False)
