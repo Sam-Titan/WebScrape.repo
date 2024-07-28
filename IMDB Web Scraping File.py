@@ -14,7 +14,7 @@ headers = {
 url = "https://www.imdb.com/chart/top/"
 response = requests.get(url, headers= headers)
 soup = BeautifulSoup(response.content, 'html.parser')
-data = soup.find('ul', attrs={'class' : 'ipc-metadata-list ipc-metadata-list--dividers-between sc-a1e81754-0 eBRbsI compact-list-view ipc-metadata-list--base'})
+data = soup.find('ul', attrs={'class' : 'ipc-metadata-list ipc-metadata-list--dividers-between sc-a1e81754-0 dHaCOW compact-list-view ipc-metadata-list--base'})
 movies_name = []
 movie_rating = []
 movie_all = []
@@ -26,7 +26,7 @@ movie_appropriate = []
 for el in range(1,26):
     movie_rank.append(el)
 # Now i find the data i need by going to the website to inspect the code and access it
-for store in data.find_all('li', attrs={'class' :'ipc-metadata-list-summary-item sc-10233bc-0 iherUv cli-parent'}):
+for store in data.find_all('li', attrs={'class' :'ipc-metadata-list-summary-item sc-10233bc-0 TwzGn cli-parent'}):
     movie_name = store('h3', class_='ipc-title__text')
     # I was unable to deploy the text or get_text function even after using the find function before 
     # After getting the names to remove the unnecessary text i use splicing. 
@@ -43,12 +43,13 @@ for store in data.find_all('li', attrs={'class' :'ipc-metadata-list-summary-item
     movie_rating_splice = movie_rating_splice[:-8]
     movie_rating.append(movie_rating_splice)
     # Now to filter the runtime and Rated Text i deploy a loop to splice and get readable text
-    for row in store('span', class_='sc-b189961a-8 kLaxqf cli-title-metadata-item'):
+    for row in store('span', class_='sc-b189961a-8 hCbzGp cli-title-metadata-item'):
         row_1 = str(row)
         # row_splice is the spliced element
         row_splice = row_1[59:]
         row_splice = row_splice.replace("</span>",'')
         movie_all.append(row_splice)
+        
 # Now i deploy a loop to get year of release, runtime and Rated out of the list
 a = 0
 b = 1
